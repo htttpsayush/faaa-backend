@@ -10,7 +10,7 @@ from alembic import context
 # Add backend directory to sys.path
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from app.core.config import settings
+from app.core.config import normalize_database_url, settings
 from app.models import Base
 
 config = context.config
@@ -18,9 +18,7 @@ config = context.config
 if config.config_file_name is not None:
     fileConfig(config.config_file_name)
 
-db_url = settings.DATABASE_URL
-if db_url.startswith("postgres://"):
-    db_url = db_url.replace("postgres://", "postgresql://", 1)
+db_url = normalize_database_url(settings.DATABASE_URL)
 
 config.set_main_option("sqlalchemy.url", db_url)
 

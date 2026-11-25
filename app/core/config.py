@@ -46,4 +46,13 @@ class Settings:
         except Exception:
             return [origin.strip() for origin in raw.split(",") if origin.strip()] or ["*"]
 
+def normalize_database_url(url: str) -> str:
+    """Normalize Postgres URLs to use the psycopg (v3) dialect consistently."""
+    if url.startswith("postgres://"):
+        return url.replace("postgres://", "postgresql+psycopg://", 1)
+    if url.startswith("postgresql://"):
+        return url.replace("postgresql://", "postgresql+psycopg://", 1)
+    return url
+
+
 settings = Settings()

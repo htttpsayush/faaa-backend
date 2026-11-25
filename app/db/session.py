@@ -1,10 +1,8 @@
 from sqlalchemy import create_engine, event
 from sqlalchemy.orm import sessionmaker
-from app.core.config import settings
+from app.core.config import normalize_database_url, settings
 
-database_url = settings.DATABASE_URL
-if database_url.startswith("postgres://"):
-    database_url = database_url.replace("postgres://", "postgresql://", 1)
+database_url = normalize_database_url(settings.DATABASE_URL)
 
 connect_args = {}
 if database_url.startswith("sqlite"):
