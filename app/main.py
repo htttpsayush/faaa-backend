@@ -6,6 +6,7 @@ from app.api.v1.users import router as users_router
 from app.api.v1.workouts import router as workouts_router
 from app.api.v1.nutrition import router as nutrition_router
 from app.api.v1.progress import router as progress_router
+from app.api.v1.coach import router as coach_router
 
 app = FastAPI(
     title=settings.PROJECT_NAME,
@@ -28,6 +29,7 @@ app.include_router(users_router, prefix=settings.API_V1_STR)
 app.include_router(workouts_router, prefix=settings.API_V1_STR)
 app.include_router(nutrition_router, prefix=settings.API_V1_STR)
 app.include_router(progress_router, prefix=settings.API_V1_STR)
+app.include_router(coach_router, prefix=settings.API_V1_STR)
 
 @app.get("/health", tags=["Health"])
 def health_check():
